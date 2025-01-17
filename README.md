@@ -1,3 +1,7 @@
+# CBIL offical implementation
+
+The project is still under patent review and acquring permission from SoftBank to release, and the simulator is around 10GB, coming soon.
+
 # unity_fish_sim
 
 Please make sure to specify your own output directory for the synthesized dataset. 
