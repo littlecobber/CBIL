@@ -23,12 +23,37 @@
 <br>
 
 
-
 # CBIL offical implementation
 
 The project is still under patent review and acquring permission from SoftBank to release, and the simulator is around 10GB, coming soon.
 
-# unity_fish_sim
+
+## News
+
+* **2024-12:** 🔥The code is coming soon.
+* **2024-12:** We present our work at SIGGRAPH ASIA 2024 in Tokyo.
+* **2024-07:** CBIL is accepted as **SIGGRAPH ASIA 2024 Journal Track (TOG)**.
+
+
+## Citation
+If our work assists your research, feel free to give us a star ⭐ or cite us using:
+```
+@article{10.1145/3687904,
+author = {Wu, Yifan and Dou, Zhiyang and Ishiwaka, Yuko and Ogawa, Shun and Lou, Yuke and Wang, Wenping and Liu, Lingjie and Komura, Taku},
+title = {CBIL: Collective Behavior Imitation Learning for Fish from Real Videos},
+year = {2024},
+issue_date = {December 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {43},
+number = {6},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3687904},
+doi = {10.1145/3687904},
+abstract = {Reproducing realistic collective behaviors presents a captivating yet formidable challenge. Traditional rule-based methods rely on hand-crafted principles, limiting motion diversity and realism in generated collective behaviors. Recent imitation learning methods learn from data but often require ground-truth motion trajectories and struggle with authenticity, especially in high-density groups with erratic movements. In this paper, we present a scalable approach, Collective Behavior Imitation Learning (CBIL), for learning fish schooling behavior directly from videos, without relying on captured motion trajectories. Our method first leverages Video Representation Learning, in which a Masked Video AutoEncoder (MVAE) extracts implicit states from video inputs in a self-supervised manner. The MVAE effectively maps 2D observations to implicit states that are compact and expressive for following the imitation learning stage. Then, we propose a novel adversarial imitation learning method to effectively capture complex movements of the schools of fish, enabling efficient imitation of the distribution of motion patterns measured in the latent space. It also incorporates bio-inspired rewards alongside priors to regularize and stabilize training. Once trained, CBIL can be used for various animation tasks with the learned collective motion priors. We further show its effectiveness across different species. Finally, we demonstrate the application of our system in detecting abnormal fish behavior from in-the-wild videos.},
+```
+
+# DeepFoids Offical Tutorial Decumentation
 
 Please make sure to specify your own output directory for the synthesized dataset. 
 It can be quite large, so I suggest you specify D drive or somewhere you can find good amount of space. 
