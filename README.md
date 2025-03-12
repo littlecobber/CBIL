@@ -1,3 +1,29 @@
+# CBIL:Collective Behavior Imitation Learning for Fish from Real Videos ![image](https://github.com/user-attachments/assets/3e1647cd-65a8-4b76-8033-db0736208271)
+
+<div align="center">
+
+### [![Project Page](https://raw.githubusercontent.com/prs-eth/Marigold/main/doc/badges/badge-website.svg)](https://littlecobber.github.io/CBIL-Project/) | [![Paper](https://img.shields.io/badge/arXiv-PDF-b31b1b)](https://dl.acm.org/doi/10.1145/3687904)
+
+
+</div>
+<p align="center" style="font-size: larger;">
+  <a href="https://arxiv.org/abs/2404.02905">CBIL:Collective Behavior Imitation Learning for Fish from Real Videos</a>
+</p>
+
+<div>
+  <p align="center" style="font-size: larger;">
+    <strong>SIGGRAPH ASIA 2024 TOG</strong>
+  </p>
+</div>
+
+<p align="center">
+<img src="https://github.com/littlecobber/CBIL/blob/main/Image/Teaser-CBIL.png" width=95%>
+<p>
+
+<br>
+
+
+
 # CBIL offical implementation
 
 The project is still under patent review and acquring permission from SoftBank to release, and the simulator is around 10GB, coming soon.
