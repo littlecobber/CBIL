@@ -34,6 +34,23 @@ The project is still under patent review and acquring permission from SoftBank t
 * **2024-12:** We present our work at SIGGRAPH ASIA 2024 in Tokyo.
 * **2024-07:** CBIL is accepted as **SIGGRAPH ASIA 2024 Journal Track (TOG)**.
 
+## Installation
+
+1.Download 'Simulator' Folder
+2.create a conda environment via `conda create -n CBIL python=3.9` and install dependent pip packages via `pip install -r requirements.txt`.
+
+## Preprocessing
+
+## Python Server
+
+## Unity Simulator
+
+## Training Scripts
+
+## Inference
+
+## Retargeting
+
 
 ## Citation
 If our work assists your research, feel free to give us a star ⭐ or cite us using:
