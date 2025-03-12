@@ -36,8 +36,8 @@ The project is still under patent review and acquring permission from SoftBank t
 
 ## Installation
 
-1.Download 'Simulator' Folder
-2.create a conda environment via `conda create -n CBIL python=3.9` and install dependent pip packages via `pip install -r requirements.txt`.
+1.Download 'Simulator' Folder  
+2.Create a conda environment via `conda create -n CBIL python=3.9` and install dependent pip packages via `pip install -r requirements.txt`.
 
 ## Preprocessing
 
