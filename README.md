@@ -41,10 +41,9 @@ The project is still under patent review and acquring permission from SoftBank t
 
 ## Preprocessing
 
-
 ## Python Server <img src="https://github.com/user-attachments/assets/6c050651-8596-4023-bcc0-7d66e26d007e" height="30px" align="center">
 
-## Unity Simulator <a href="https://www.flaticon.com/free-icons/unity" title="unity icons">Unity icons created by Freepik - Flaticon</a>
+## Unity Simulator <img src="https://icons8.com/icon/39848/unity" height="30px" align="center">
 
 ## Training Scripts <img src="https://github.com/user-attachments/assets/91a2d2ac-dbd8-476a-8c06-5099726edd1f" height="30px" align="center">
 
