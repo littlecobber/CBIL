@@ -39,11 +39,12 @@ The project is still under patent review and acquring permission from SoftBank t
 2.Create a conda environment via `conda create -n CBIL python=3.9` and  
   install dependent pip packages via `pip install -r requirements.txt`.
 
+
 ## Preprocessing
 
 ## Python Server <img src="https://github.com/user-attachments/assets/6c050651-8596-4023-bcc0-7d66e26d007e" height="30px" align="center">
 
-## Unity Simulator <img src="https://github.com/user-attachments/assets/bc44e1a8-d933-4db7-8062-8cb858fb5eea" height="30px" align="center">
+## Unity Simulator <img src="https://github.com/user-attachments/assets/89eba822-fad8-4dc1-915e-a3e83b7bd5ff" height="30px" align="center">
 
 ## Training Scripts <img src="https://github.com/user-attachments/assets/91a2d2ac-dbd8-476a-8c06-5099726edd1f" height="30px" align="center">
 
