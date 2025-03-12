@@ -43,7 +43,7 @@ The project is still under patent review and acquring permission from SoftBank t
 
 ## Python Server <img src="https://github.com/user-attachments/assets/6c050651-8596-4023-bcc0-7d66e26d007e" height="30px" align="center">
 
-## Unity Simulator <img src="https://github.com/littlecobber/CBIL/blob/main/Image/icons8-unity.svg" height="30px" align="center">
+## Unity Simulator <img src="https://github.com/littlecobber/CBIL/blob/main/Image/Unity.svg" height="30px" align="center">
 
 ## Training Scripts <img src="https://github.com/user-attachments/assets/91a2d2ac-dbd8-476a-8c06-5099726edd1f" height="30px" align="center">
 
