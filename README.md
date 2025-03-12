@@ -2,21 +2,7 @@
 
 <div align="center">
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://littlecobber.github.io/CBIL-Project/">
-        <img src="https://raw.githubusercontent.com/prs-eth/Marigold/main/doc/badges/badge-website.svg" alt="Project Page">
-      </a>
-    </td>
-    <td align="center" style="vertical-align: middle;"> | </td>
-    <td align="center">
-      <a href="https://dl.acm.org/doi/10.1145/3687904">
-        <img src="https://img.shields.io/badge/arXiv-PDF-b31b1b" alt="Paper">
-      </a>
-    </td>
-  </tr>
-</table>
+### [![Project Page](https://raw.githubusercontent.com/prs-eth/Marigold/main/doc/badges/badge-website.svg)](https://littlecobber.github.io/CBIL-Project/) [![Paper](https://img.shields.io/badge/arXiv-PDF-b31b1b)](https://dl.acm.org/doi/10.1145/3687904)
 
 
 </div>
