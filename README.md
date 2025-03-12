@@ -80,7 +80,7 @@ If you do not set it, the app crash in runtime.
 
 We plan to make it relative path or optional to make everyone life easeier soon.
 
-# Data Generator Manager toggles
+## Data Generator Manager toggles
 - Disable Post Process: Disables all post process effects when running the simulation
 - Enable Timelapse: Enable timelapse mode to create timelapses of the simulation
 - MDE mode: turns off animation for Depth map generation
@@ -90,13 +90,13 @@ We plan to make it relative path or optional to make everyone life easeier soon.
 - Enable Random Camera: Will randomize which camera to use between the selected cameras
 - Additional Data: adds Time of day, temperature in Celesus, and Light Intensity in Lux to the global_id csv 
 
-# Aquarium (fish cage) setting
+## Aquarium (fish cage) setting
 - The default aquarium is set using the `Prism Settings` from Aquarium in hierarchy list. The shape, size and position of fish cage can be controlled by the side count, apothem, height, center and thickenss for the prism. For example, 8 sides can make the cage an octagon, and 4 sides can make it a cuboid.
   - A double-layer structure is used for fish cage to prevent fish from penetrating cage walls. Both layers have the same shape, but the outer layer is larger. The size of outer layer is controlled by the parameter `Scale Multiplier Of Outer Bound` that scales it uniformly.
 - The content under `Deprecated Settings` (from `Use Old Aquarium` to `Water Surface`) is used to set the old aquarium, which only creates a cubic cage. It will only work if `Use Old Aquarium` box is checked and is kept in case we need it. It can be disregarded if we use the default (prism) aquarium setting.
 
 
-# Training fish agents using DeepFoids
+## Training fish agents using DeepFoids
 
 - Please follow the [ml-agents install guide](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Installation.md) to install the required Python packages for ml-agents toolkit. Note that the current framework has only be tested on **Python 3.6.10**. When install the `mlagents` Python package, please install `mlagents==0.25.0` (instead of `0.27.0`) because it's from the same release as the ml-agents Unity package version `1.9.0-preview.1` that we are using and can avoid possible compatibility issues.
 
@@ -121,7 +121,7 @@ We plan to make it relative path or optional to make everyone life easeier soon.
 - Please note: It is recommended that output in the DataGeneratorParameters set to None when training or using deep foids. While it is possible to generate output when deep foids is enabled, it will be much slower than using normal foids. Therefore, it is recommended that you make sure to disable deep foids when generating datasets.
 
 
-# Running trained policy
+## Running trained policy
 
 - At `Prefab_Ginjake_verLow_DeepFoids` > Behavior Parameters > Model, select a trained policy file (.onnx) under the project directory. 
 
@@ -136,7 +136,7 @@ We plan to make it relative path or optional to make everyone life easeier soon.
 - Click the Play button in Unity editor to run trained policy.
 
 
-# Enable Social Rank System
+## Enable Social Rank System
 
 - To enable the social rank system in **TagajoSmall_Ocean** scene, please select `Prefab_Yellowtail_verylow_DeepFoids_SocialRank` as the fish prefab to run in `DeepFoidsTrainingManager`. Then make sure in this prefab the Fish Agent Multi script > Enable Social Rank System box is checked.
 
@@ -145,14 +145,14 @@ We plan to make it relative path or optional to make everyone life easeier soon.
 - A large cage (eg. a 5 x 4.6 x 5 cubic cage or similar sized octagon cage) and a small number of fish (eg. 10 or 20) are recommended for social rank system demo. It's because the social rank system policy was trained using a large cage and actually with red seabream, but runs well on yellowtail. Besides that less fish makes the trails clearer to see.
 
 
-# Switch DeepFoids back to Foids
+## Switch DeepFoids back to Foids
 
 - To switch back from DeepFoids mode to Foids mode, we just need to uncheck the Enable Deep Foids box in `DataGeneratorManager`. Then when we click Play button the original Foids model will run. 
 
-# Do not use Fisheye mode on the cameras when trying to generate data!
+## Do not use Fisheye mode on the cameras when trying to generate data!
 - Using Fisheye mode when trying to generate data will not only return incorrect outputs but will also crash the simulation when using 3D Bounding Box and Visibility passes together. Use standard mode when generating data instead!
 - Also do not have multiple cameras enabled when trying to generate output. It will result in all ouput images being white.
-# Underwater Shader infomation
+## Underwater Shader infomation
 Quick Explanation of Attenuation Coefficients
 - Attenuation Coefficients: These are values which determine how much light is absorbed by the medium (in this case waters). These will always be stored as a 3D vector, with X = absorption of red, Y = absorption of green, and Z = absorption of blue. The higher the value, the more that color is absorbed by the medium and the less visible it is.
 
@@ -286,7 +286,7 @@ Demo Manager Explanation
 
 - NOTE: Make sure to have the generator parameters setting "Frames per cycle" set to a very high value. The Demo manager system doesn't completely overwrite the generator parameters time system at the moment.
 - NOTE 2: Don't have the enviroment randomizer enabled when demo manager is on! It will mess with the system
-# Demo Manager UI
+## Demo Manager UI
 - The UI can be found under the Canvas gameobject in the scene heirarchy
 - The Event System is used to detect mouse clicks on buttons, so DO NOT DELETE IT
 - Disabling the UI is very easy, all you need to do is uncheck the box next to the Canvas name in the inspector when canvas is selected
@@ -294,7 +294,7 @@ Demo Manager Explanation
 - The lower left corner displays the date and time in the simulation
 - the lower right button turns off all buttons except the time display
 - Example of UI:![image](https://user-images.githubusercontent.com/29764207/155198686-794d0225-02f1-492c-a595-5ee65964ee05.png)
-# Interactive Demo and Build Intructions
+## Interactive Demo and Build Intructions
 Interactive Demo Explaination
 - Go to Scenes > Enviroments > Tagajo Small_Ocean and double click it to open scene with interactive demo
 - When you run it for the first time, you may see a pop-up window asking if you want to repair some of the FMOD libraries, click Repair. This will prevent the message from popping up again
@@ -322,7 +322,7 @@ How to build the Interactive Demo
 - Wait for it to build, and once its done you will have your build!
   - If there are errors, the build will not build and will list the errors in the unity console 
 - You should be able to head to the build location to run the build version  
-# Dataset Generatation
+## Dataset Generatation
 - To change anything about dataset generation, go to the "DataGeneratorManager" gameobject under Enviroment
 - Explaination of each setting in the DataGeneratorManager script inside DataGeneratorManager:
   - Generator Parameters: Controls how many cycles a dataset will go through, how long each cycle is, and what is outputted each cycle
