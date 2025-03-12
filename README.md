@@ -1,4 +1,4 @@
-# CBIL:Collective Behavior Imitation Learning for Fish from Real Videos <img src="https://github.com/user-attachments/assets/3e1647cd-65a8-4b76-8033-db0736208271" height="24px" align="center">
+# CBIL:Collective Behavior Imitation Learning for Fish from Real Videos <img src="https://github.com/user-attachments/assets/3e1647cd-65a8-4b76-8033-db0736208271" height="30px" align="center">
 
 <div align="center">
 
