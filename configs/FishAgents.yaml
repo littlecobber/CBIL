@@ -1,0 +1,26 @@
+behaviors:
+  FishAgent:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 10                    # 10, 1000, 1024
+      buffer_size: 100000               # 100, 100000, 10240
+      learning_rate: 0.0001              # 0.0003, 0.0001, 0.0006, 0.001
+      beta: 0.0005
+      epsilon: 0.2                      # 0.2, 0.1
+      lambd: 0.99
+      num_epoch: 3                      # 3
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: false
+      hidden_units: 128
+      num_layers: 4                     # 2
+      vis_encode_type: simple
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    keep_checkpoints: 50
+    checkpoint_interval: 200000
+    max_steps: 4000000                  # 1000000, 2000000
+    time_horizon: 64
+    summary_freq: 10000
