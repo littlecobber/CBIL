@@ -2,7 +2,7 @@
 
 <div align="center">
 
-### [![Project Page](https://raw.githubusercontent.com/prs-eth/Marigold/main/doc/badges/badge-website.svg)](https://littlecobber.github.io/CBIL-Project/) [![Paper](https://img.shields.io/badge/arXiv-PDF-b31b1b)](https://dl.acm.org/doi/10.1145/3687904)
+### [![Project Page](https://raw.githubusercontent.com/prs-eth/Marigold/main/doc/badges/badge-website.svg)](https://littlecobber.github.io/CBIL-Project/) [![Paper](https://img.shields.io/badge/arXiv-PDF-b31b1b)](https://arxiv.org/abs/2504.00234)
 
 
 </div>
@@ -25,13 +25,25 @@
 
 # CBIL offical implementation
 
-The project is still under patent review and acquring permission from SoftBank to release, and the simulator is around 10GB, coming soon.
+The project is still under patent review and acquring permission from SoftBank to release, however, we release core part of the simulator to perform basic pipepline training and inference.
+
+You can download the core part of the simulator via [Simulator](https://drive.google.com/drive/folders/1K_MTJ7uxssfHhwIKAMubpC06C3Di7F1C?usp=sharing). The repo is still updating.
 
 ## News
 
+* **2025-03:** 🔥Demo code released.
 * **2024-12:** 🔥The code is coming soon.
 * **2024-12:** We present our work at SIGGRAPH ASIA 2024 in Tokyo.
 * **2024-07:** CBIL is accepted as **SIGGRAPH ASIA 2024 Journal Track (TOG)**.
+
+## 📌 To-Do List
+
+- [x] Release the core code of CBIL (Fish Simulator Unity). 
+- [x] Release the python server implementation.
+- [x] Demo code with example fish asset and texture.
+- [ ] Keep updating
+- [ ] Add more features
+
 
 ## Installation
 
@@ -41,16 +53,183 @@ The project is still under patent review and acquring permission from SoftBank t
 
 ## Preprocessing
 
-## Python Server <img src="https://github.com/user-attachments/assets/6c050651-8596-4023-bcc0-7d66e26d007e" height="30px" align="center">
+1. For the preprocessing of reference video segmentation, refers to state-of-the-art method, which is: [SAM2](https://github.com/facebookresearch/sam2)
+
+2. For the MVAE training, refers to the code in `basic_server.py` (3D Conv Based VAE, refers to MVAE folder)
 
 ## Unity Simulator <img src="https://github.com/littlecobber/CBIL/blob/main/Image/uni.svg" height="30px" align="center">
 
+The Unity version we use is `2020.2.2f1`
+
+### Reward Function
+* Agents' states, action space and also reward functions are all written in `Simulator\Assets\Scripts\DeepFoids\FishAgent\FishAgentMulti.cs`
+* For example, the circling reward，`bool clockwise` to control directions
+
+```
+private float CalculateCirclingReward(bool clockwise)
+{
+    Vector3 centerPoint = new Vector3(2.5f, 2.5f, 2.5f);
+    Vector3 fishPosition = transform.localPosition;
+    Vector3 toCenter = centerPoint - fishPosition;
+
+    Vector3 desiredDirection;
+    if (clockwise)
+    {
+        desiredDirection = Vector3.Cross(Vector3.up, toCenter).normalized;
+        goal_direction = desiredDirection;
+    }
+    else
+    {
+        desiredDirection = Vector3.Cross(toCenter, Vector3.up).normalized;
+        goal_direction = desiredDirection;
+    }
+
+    float dot_vel = Vector3.Dot(desiredDirection, transform.forward);
+    float target_velocity = 1.0f;
+
+    return high_level_weight * Scale_Reward(10.0f * (dot_vel / transform.forward.magnitude) - 10.0f * (rBody.velocity.magnitude - target_velocity) * (rBody.velocity.magnitude - target_velocity));
+}
+
+```
+
+### Observation Space
+* For each trained policy, we predefine the dimension of observation space, and should correspond to definition in `FishAgentMulti.cs` in Simulator
+```
+// States needed for different high level task:
+        // Circling:
+
+        // Goal
+        sensor.AddObservation(goal_direction);
+        sensor.AddObservation(new Vector3(2.5f,2.5f,2.5f)-transform.localPosition);
+        sensor.AddObservation(Vector3.Distance(transform.localPosition, new Vector3(2.5f,2.5f,2.5f)));
+
+        // Fish States
+        sensor.AddObservation(rBody.velocity);
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(transform.forward);
+```
+### Virtual Camera
+* For circling, we place a virtual camera named `agentCameraRT` at the bottom of fish tank (you can manually set different location), this is used to collect frames during
+  runtime for pretrain MVAE and also policy training with imitation learning.
+
+```
+void SendImageToPython()
+    {
+        lock (sendImageLock)  // safe
+        {
+            VRcount++;
+            // Capture the images from the virtual camera
+            RenderTexture renderTexture = agentCamera.targetTexture;
+            Texture2D texture2D = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
+            RenderTexture.active = renderTexture;
+            texture2D.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+            texture2D.Apply();
+
+            // convert images to byte
+            byte[] imageBytes = texture2D.EncodeToPNG();
+
+            // Clean up the Texture2D after use to free memory
+            UnityEngine.Object.Destroy(texture2D);
+
+            string lengthStr = imageBytes.Length.ToString("D10"); // Converts length to a 10-digit string
+            byte[] lengthBytes = System.Text.Encoding.UTF8.GetBytes(lengthStr);
+            stream.Write(lengthBytes, 0, lengthBytes.Length); // Send the length of the image first
+            stream.Write(imageBytes, 0, imageBytes.Length); // Then send the actual image bytes
+
+            if (VRcount == 10)
+            {
+                VRcount = 0;
+                // start to receiving rewards from python
+                byte[] buffer = new byte[4]; // assume that the reward is a 4 byte float
+                stream.Read(buffer, 0, buffer.Length);
+
+                float probability = System.BitConverter.ToSingle(buffer, 0);
+
+                // compute style reward
+                float reward = rewardFunction.ComputeReward(probability);
+                // add reward
+                AddReward(style_weight * Scale_Style_Reward(reward));
+
+            }
+        }  
+```
+### ML-Agent
+[Offical ML-Agent Documentation](https://github.com/Unity-Technologies/ml-agents)
+![image](https://github.com/user-attachments/assets/fbb62eee-6b8a-4e2b-9197-bef0afc46093)
+
+We use ML-Agent PPO framework for reinforcement learning
+* `ExampleTrainingConfig`
+```
+behaviors:
+  FishAgent:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 10                    # 10, 1000, 1024
+      buffer_size: 100000               # 100, 100000, 10240
+      learning_rate: 0.0001              # 0.0003, 0.0001, 0.0006, 0.001
+      beta: 0.0005
+      epsilon: 0.2                      # 0.2, 0.1
+      lambd: 0.99
+      num_epoch: 3                      # 3
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: false
+      hidden_units: 128
+      num_layers: 4                     # 2
+      vis_encode_type: simple
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    keep_checkpoints: 50
+    checkpoint_interval: 200000
+    max_steps: 4000000                  # 1000000, 2000000
+    time_horizon: 64
+    summary_freq: 10000
+```
+
+## Python Server <img src="https://github.com/user-attachments/assets/6c050651-8596-4023-bcc0-7d66e26d007e" height="30px" align="center">
+
+* first make sure `ConnectToServer()` in `FishAgentMulti.cs` is **NOT** commanded out
+* run `basic_server.py` 
+
 ## Training Scripts <img src="https://github.com/user-attachments/assets/91a2d2ac-dbd8-476a-8c06-5099726edd1f" height="30px" align="center">
+
+### Before training, you need to 
+* specify a fish prefab used for training in `TrainingManager`
+* select the fish number for training
+* choose behavior type in `Prefab_Ginjake_veryLow_DeepFoids` as `default`
+
+### Fish Parameters
+For each fish prefab, for example, `Prefab_Ginjake_veryLow_DeepFoids`，it has multiple components.
+use the default setting for a quick start.
+
+### Training high level policy
+* Simply run `mlagents-learn fishagents.yaml --run-id=circling_demo` to begin training
+
+### Training policy with imitation learning
+* run python server first (make sure `ConnectToServer()` in `FishAgentMulti.cs` is **NOT** commanded out)
+* then run `mlagents-learn fishagents.yaml --run-id=circling_demo` to begin training
+* the discriminator will also be trained at the same time
 
 ## Inference
 
-## Retargeting
+1. Load scene `TagajoSmall_Ocean`
+2. select fish prefabs `Prefab_Ginjake_veryLow_DeepFoids` in `TrainingManager`
+3. choose fish number in `TrainingManager` and `fish count`
+4. Load trained policy and select `inference only`
+5. Run the simulation
 
+Optional: `inference device`: cpu or gpu
+
+Before run the simulation, first make sure `DataGeneratorManager` has the following preference:
+- [x] MDE Mode
+- [x] Disable UI
+
+## Models
+
+* MVAE weght used for demo: [Here](https://drive.google.com/drive/folders/1E4JkwpP_Gpg_mP6DkikHbnwQ-S5ZqbCf)
+* inital discriminator weight for demo: [Here](https://drive.google.com/drive/folders/1E4JkwpP_Gpg_mP6DkikHbnwQ-S5ZqbCf)
 
 ## Citation
 If our work assists your research, feel free to give us a star ⭐ or cite us using:
@@ -69,6 +248,12 @@ url = {https://doi.org/10.1145/3687904},
 doi = {10.1145/3687904},
 abstract = {Reproducing realistic collective behaviors presents a captivating yet formidable challenge. Traditional rule-based methods rely on hand-crafted principles, limiting motion diversity and realism in generated collective behaviors. Recent imitation learning methods learn from data but often require ground-truth motion trajectories and struggle with authenticity, especially in high-density groups with erratic movements. In this paper, we present a scalable approach, Collective Behavior Imitation Learning (CBIL), for learning fish schooling behavior directly from videos, without relying on captured motion trajectories. Our method first leverages Video Representation Learning, in which a Masked Video AutoEncoder (MVAE) extracts implicit states from video inputs in a self-supervised manner. The MVAE effectively maps 2D observations to implicit states that are compact and expressive for following the imitation learning stage. Then, we propose a novel adversarial imitation learning method to effectively capture complex movements of the schools of fish, enabling efficient imitation of the distribution of motion patterns measured in the latent space. It also incorporates bio-inspired rewards alongside priors to regularize and stabilize training. Once trained, CBIL can be used for various animation tasks with the learned collective motion priors. We further show its effectiveness across different species. Finally, we demonstrate the application of our system in detecting abnormal fish behavior from in-the-wild videos.},
 ```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=littlecobber/CBIL&type=Date)](https://www.star-history.com/#littlecobber/CBIL&Date)
+
+
 
 # DeepFoids Offical Tutorial Documentation
 
@@ -406,4 +591,3 @@ If the Visibility output type is enabled, then for each frame a file (named cycl
     - The standard deviation of the pixel values of the contents of the fish's bounding box (after post processing). This is used to estimate the information content of the bounding box. A value close to 0 implies there is not a lot of variation. For instance, the fish may be a similar color to the ocean, or the whole area may be covered by solid fog.
     - The correlation coefficient of the non-occluded pixels before post-processing and the non-occluded pixels after post-processing. This is used to estimate the degree to which post-processing has changed (and potentially obscured) the fish. Values close to 0 mean the fish has been very affected by post-processing, while values close to 1 mean it hasn't changed much at all. Values close to -1 imply a negative correlation between the pre- and post-processing fish. For instance, the colors may be inverted.
   - These two components are multiplied together to get the final estimate.
-

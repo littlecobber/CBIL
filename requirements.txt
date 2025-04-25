@@ -6,4 +6,5 @@ matplotlib
 Pillow
 scikit-learn
 accelerate
+tqdm
 mlagents
