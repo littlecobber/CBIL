@@ -253,8 +253,6 @@ abstract = {Reproducing realistic collective behaviors presents a captivating ye
 
 [![Star History Chart](https://api.star-history.com/svg?repos=littlecobber/CBIL&type=Date)](https://www.star-history.com/#littlecobber/CBIL&Date)
 
-
-
 # DeepFoids Offical Tutorial Documentation
 
 Please make sure to specify your own output directory for the synthesized dataset. 
